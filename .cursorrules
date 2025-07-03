@@ -1,0 +1,220 @@
+# Kevin's Log In App - 개발 가이드 및 중요 참고사항
+
+## 🎯 프로젝트 개요
+- **프로젝트명**: Kevin's Log In App
+- **목적**: Supabase + Google OAuth 인증 시스템 학습 및 구현
+- **배포 URL**: https://log-in-seven-alpha.vercel.app
+- **GitHub**: https://github.com/Kevin-innovation/log_in.git
+
+## 🏗️ 아키텍처 및 기술 스택
+
+### Frontend
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **State Management**: React Context API
+
+### Backend & Auth
+- **Authentication**: Supabase Auth
+- **Database**: Supabase (PostgreSQL)
+- **OAuth Provider**: Google OAuth 2.0
+
+### Deployment
+- **Platform**: Vercel
+- **Environment**: Production
+
+## 📦 핵심 의존성
+```json
+{
+  "@supabase/supabase-js": "^2.x",
+  "@supabase/auth-ui-react": "^0.x", 
+  "lucide-react": "^0.x",
+  "next": "15.x",
+  "react": "^18.x",
+  "typescript": "^5.x"
+}
+```
+
+## 🔧 환경 설정
+
+### 필수 환경 변수
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://inwjcarydychemrxyoxz.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlud2pjYXJ5ZHljaGVtcnh5b3h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTM2NTUsImV4cCI6MjA2NzA4OTY1NX0.WyU3_ol7fZsYrInLAQC0IICR77jAz-YlyL6PkFApAlc
+```
+
+### Supabase 프로젝트 정보
+- **Project ID**: inwjcarydychemrxyoxz
+- **Project Name**: log-in-app
+- **Region**: 기본 설정
+- **Database**: PostgreSQL with RLS 활성화
+
+## 🗄️ 데이터베이스 스키마
+
+### profiles 테이블
+```sql
+CREATE TABLE public.profiles (
+  id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+  email TEXT NOT NULL,
+  name TEXT,
+  nickname TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- RLS 정책
+CREATE POLICY "Users can view own profile" ON public.profiles
+  FOR SELECT USING (auth.uid() = id);
+
+CREATE POLICY "Users can insert own profile" ON public.profiles
+  FOR INSERT WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "Users can update own profile" ON public.profiles
+  FOR UPDATE USING (auth.uid() = id);
+```
+
+## 🔐 OAuth 설정
+
+### Google Cloud Console 설정
+- **Project**: 적절한 Google Cloud 프로젝트
+- **OAuth Client Type**: Web application
+
+### 중요한 OAuth 설정값
+```
+Authorized JavaScript origins:
+- https://inwjcarydychemrxyoxz.supabase.co
+- https://log-in-seven-alpha.vercel.app
+
+Authorized redirect URIs:
+- https://inwjcarydychemrxyoxz.supabase.co/auth/v1/callback
+- https://log-in-seven-alpha.vercel.app/auth/callback
+```
+
+### Supabase Auth 설정
+```
+Site URL: https://log-in-seven-alpha.vercel.app
+Redirect URLs:
+- https://log-in-seven-alpha.vercel.app/auth/callback
+- https://log-in-seven-alpha.vercel.app/**
+```
+
+## 🚨 중요한 이슈 및 해결법
+
+### ❌ CRITICAL: Google+ API 관련 오해
+**문제**: "Google+ API" 또는 "Google Identity API"를 찾으려 함
+**진실**: 이런 API는 더 이상 존재하지 않음
+**정답**: Google Cloud Console → APIs & Services → Credentials에서 OAuth 2.0 Client ID 생성
+
+### ❌ CRITICAL: OAuth Redirect 오류
+**증상**: "The message port closed before a response was received"
+**증상**: "Open Presentation Preview in Obsidian first!" 
+**원인**: OAuth redirect URI 설정 오류
+**해결**:
+1. Google Cloud Console에서 정확한 도메인 설정
+2. Supabase에서 Site URL과 Redirect URLs 정확히 설정
+3. 설정 변경 후 5-10분 대기 (Google 설정 전파 시간 필요)
+
+### ❌ 환경 변수 누락
+**증상**: Supabase 연결 실패
+**원인**: Vercel 환경 변수 미설정
+**해결**: Vercel Dashboard → Settings → Environment Variables에서 설정 후 재배포
+
+### ❌ 포트 충돌
+**상황**: 3000 포트가 Obsidian MCP에서 사용됨
+**해결**: 다른 포트 사용 또는 Vercel 도메인으로 테스트
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── app/
+│   ├── auth/
+│   │   ├── callback/page.tsx    # OAuth 콜백 처리 (중요!)
+│   │   └── page.tsx             # 로그인/회원가입 통합 페이지
+│   ├── dashboard/page.tsx       # Kevin Landing Page (4개 게임 카드)
+│   ├── layout.tsx               # 루트 레이아웃 (Providers 포함)
+│   ├── page.tsx                 # 홈페이지 (로그인 상태 체크)
+│   └── globals.css              # Tailwind 설정
+├── components/
+│   └── ThemeToggle.tsx          # 다크/라이트 모드 토글
+├── contexts/
+│   ├── AuthContext.tsx          # 인증 상태 관리 (핵심!)
+│   └── ThemeContext.tsx         # 테마 상태 관리
+└── lib/
+    └── supabase.ts              # Supabase 클라이언트 설정
+```
+
+## 🎨 UI/UX 특징
+- **디자인**: 모던하고 깔끔한 그라디언트 배경
+- **반응형**: 모바일 친화적 디자인
+- **테마**: 다크/라이트 모드 지원
+- **애니메이션**: 부드러운 트랜지션 효과
+- **접근성**: 적절한 색상 대비 및 포커스 상태
+
+## 🔄 인증 플로우
+
+### 1. Google 로그인
+1. 사용자가 "Google로 가입하기" 클릭
+2. Supabase Auth가 Google OAuth 시작
+3. Google 인증 페이지로 리디렉션
+4. 사용자 인증 후 `/auth/callback`으로 리디렉션
+5. `useEffect`에서 세션 확인 후 `/dashboard`로 이동
+
+### 2. 일반 회원가입
+1. 이메일, 이름, 닉네임, 비밀번호 입력
+2. Supabase Auth로 계정 생성
+3. `profiles` 테이블에 추가 정보 저장
+4. 로그인 성공 시 `/dashboard`로 이동
+
+## 🧪 테스트 시나리오
+1. ✅ Google 로그인 → 프로필 생성 → 대시보드 접속
+2. ✅ 일반 회원가입 → 로그인 → 대시보드 접속
+3. ✅ 다크/라이트 모드 토글 동작
+4. ✅ 로그아웃 → 홈페이지 리디렉션
+5. ✅ 미인증 상태에서 대시보드 접근 시도 → 로그인 페이지로 리디렉션
+
+## 🚀 배포 과정
+1. ✅ GitHub 저장소에 코드 푸시
+2. ✅ Vercel에서 저장소 연결
+3. ✅ 환경 변수 설정
+4. ✅ 자동 배포 완료
+5. ✅ OAuth 설정에 배포 도메인 추가
+6. ✅ 최종 테스트 완료
+
+## ⚠️ 개발 시 주의사항
+
+### DO (해야 할 것)
+- OAuth 설정 시 정확한 도메인 사용
+- 환경 변수 보안 관리
+- RLS 정책 반드시 설정
+- 에러 핸들링 구현
+- TypeScript 타입 안전성 확보
+
+### DON'T (하지 말 것)
+- Google+ API나 Google Identity API 찾으려 하지 말 것
+- .env 파일을 Git에 커밋하지 말 것
+- OAuth 설정에서 wildcard 사용하지 말 것
+- 포트 충돌 시 강제로 kill하지 말 것
+- Supabase RLS 없이 운영하지 말 것
+
+## 🏆 성공 지표
+- ✅ Google 로그인 100% 동작
+- ✅ 일반 회원가입/로그인 100% 동작
+- ✅ 반응형 디자인 구현
+- ✅ 다크/라이트 모드 구현
+- ✅ 안전한 인증 시스템 구축
+- ✅ Vercel 배포 성공
+- ✅ 모든 OAuth 이슈 해결
+
+## 🔮 향후 개발 방향
+- 게임 기능 실제 구현
+- 사용자 프로필 상세 설정
+- 소셜 기능 추가
+- 성능 최적화
+- SEO 개선
+
+---
+
+**📋 이 문서는 향후 개발에서 같은 실수를 반복하지 않기 위한 완전한 가이드입니다.**
+**특히 OAuth 설정 관련 이슈들은 반드시 숙지하고 시작하세요!** 
