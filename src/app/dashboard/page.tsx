@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import ThemeToggle from '@/components/ThemeToggle'
-import { LogOut, Gamepad2, Trophy, Star, Settings, User } from 'lucide-react'
+import { LogOut, Gamepad2, Trophy, Star, Settings } from 'lucide-react'
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
@@ -78,8 +78,8 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <User className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <img src="/kevin.png" alt="Kevin" className="w-full h-full object-cover" />
               </div>
               <h1 className="ml-3 text-xl font-bold text-gray-900 dark:text-white">
                 DLAB Kevin&apos;s Page

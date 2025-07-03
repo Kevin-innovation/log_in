@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import ThemeToggle from '@/components/ThemeToggle'
-import { Mail, Lock, User, UserPlus, Eye, EyeOff } from 'lucide-react'
+import { Mail, Lock, UserPlus, Eye, EyeOff } from 'lucide-react'
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(true) // 회원가입이 기본으로 보임
@@ -91,12 +91,12 @@ export default function AuthPage() {
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
           {/* 로고 & 제목 */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <User className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+              <img src="/kevin.png" alt="Kevin" className="w-full h-full object-cover" />
             </div>
-                         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-               Kevin&apos;s App
-             </h1>
+                                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              DLAB Kevin&apos;s Page
+            </h1>
             <p className="text-gray-600 dark:text-gray-300">
               {isSignUp ? '새 계정을 만들어보세요' : '다시 만나서 반갑습니다'}
             </p>
@@ -196,7 +196,7 @@ export default function AuthPage() {
                   이름
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <UserPlus className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
                     type="text"
                     id="name"
