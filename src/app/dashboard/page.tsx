@@ -39,8 +39,8 @@ export default function DashboardPage() {
   const games = [
     {
       id: 1,
-      title: '퀴즈 게임',
-      description: '다양한 주제의 퀴즈를 풀어보세요',
+      title: 'Wave 게임',
+      description: '파도를 타며 높은 점수를 달성해보세요',
       icon: <Trophy className="w-8 h-8" />,
       color: 'from-yellow-400 to-orange-500',
       status: 'coming-soon'
@@ -82,7 +82,7 @@ export default function DashboardPage() {
                 <User className="w-6 h-6 text-white" />
               </div>
               <h1 className="ml-3 text-xl font-bold text-gray-900 dark:text-white">
-                Kevin&apos;s App
+                DLAB Kevin&apos;s Page
               </h1>
             </div>
             

@@ -1,4 +1,4 @@
-# 🔐 Kevin's Log In App
+# 🔐 DLAB Kevin's Page
 
 **🌐 배포된 사이트**: https://log-in-seven-alpha.vercel.app
 

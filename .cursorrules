@@ -1,7 +1,7 @@
-# Kevin's Log In App - 개발 가이드 및 중요 참고사항
+# DLAB Kevin's Page - 개발 가이드 및 중요 참고사항
 
 ## 🎯 프로젝트 개요
-- **프로젝트명**: Kevin's Log In App
+- **프로젝트명**: DLAB Kevin's Page
 - **목적**: Supabase + Google OAuth 인증 시스템 학습 및 구현
 - **배포 URL**: https://log-in-seven-alpha.vercel.app
 - **GitHub**: https://github.com/Kevin-innovation/log_in.git

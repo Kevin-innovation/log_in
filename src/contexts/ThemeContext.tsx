@@ -13,11 +13,14 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    
     // 로컬 스토리지에서 테마 설정 불러오기
     const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
+    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
       setTheme(savedTheme)
     } else {
       // 시스템 테마 설정 확인
@@ -27,6 +30,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
+    if (!mounted) return
+    
     // HTML 요소에 테마 클래스 적용
     const root = document.documentElement
     if (theme === 'dark') {
@@ -37,9 +42,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     
     // 로컬 스토리지에 테마 저장
     localStorage.setItem('theme', theme)
-  }, [theme])
+    console.log('테마 변경됨:', theme)
+  }, [theme, mounted])
 
   const toggleTheme = () => {
+    console.log('테마 토글:', theme, '->', theme === 'light' ? 'dark' : 'light')
     setTheme(prev => prev === 'light' ? 'dark' : 'light')
   }
 
