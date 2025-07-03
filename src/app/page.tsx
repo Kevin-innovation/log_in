@@ -20,17 +20,17 @@ export default function Home() {
 
   // 로딩 중일 때 표시할 화면
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
       <div className="text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden bg-white border-2 border-gray-200">
           <img src="/kevin.png" alt="Kevin" className="w-full h-full object-cover" />
         </div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          DLAB Kevin&apos;s Page
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
-          잠시만 기다려주세요...
-        </p>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            DLAB Kevin&apos;s Page
+          </h1>
+          <p className="text-gray-600 mb-4">
+            잠시만 기다려주세요...
+          </p>
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
       </div>
     </div>

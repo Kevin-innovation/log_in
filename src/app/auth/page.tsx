@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
-import ThemeToggle from '@/components/ThemeToggle'
+
 import { Mail, Lock, UserPlus, Eye, EyeOff } from 'lucide-react'
 
 export default function AuthPage() {
@@ -81,35 +81,32 @@ export default function AuthPage() {
    }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      {/* 테마 토글 버튼 */}
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100   flex items-center justify-center p-4">
+
 
       <div className="w-full max-w-md">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+        <div className="bg-white  rounded-2xl shadow-xl p-8">
           {/* 로고 & 제목 */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden bg-white border-2 border-gray-200">
               <img src="/kevin.png" alt="Kevin" className="w-full h-full object-cover" />
             </div>
-                                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                     <h1 className="text-2xl font-bold text-gray-900  mb-2">
               DLAB Kevin&apos;s Page
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 ">
               {isSignUp ? '새 계정을 만들어보세요' : '다시 만나서 반갑습니다'}
             </p>
           </div>
 
           {/* 탭 전환 */}
-          <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+          <div className="flex mb-6 bg-gray-100  rounded-lg p-1">
             <button
               onClick={() => setIsSignUp(true)}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
                 isSignUp
-                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  ? 'bg-white  text-gray-900  shadow-sm'
+                  : 'text-gray-600  hover:text-gray-900 :text-white'
               }`}
             >
               회원가입
@@ -118,8 +115,8 @@ export default function AuthPage() {
               onClick={() => setIsSignUp(false)}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
                 !isSignUp
-                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  ? 'bg-white  text-gray-900  shadow-sm'
+                  : 'text-gray-600  hover:text-gray-900 :text-white'
               }`}
             >
               로그인
@@ -130,7 +127,7 @@ export default function AuthPage() {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full mb-6 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-lg p-3 flex items-center justify-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
+            className="w-full mb-6 bg-white  border-2 border-gray-200  rounded-lg p-3 flex items-center justify-center gap-3 hover:bg-gray-50 :bg-gray-600 transition-colors disabled:opacity-50"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -150,7 +147,7 @@ export default function AuthPage() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            <span className="text-gray-700 dark:text-gray-200 font-medium">
+            <span className="text-gray-700  font-medium">
               Google로 {isSignUp ? '가입하기' : '로그인'}
             </span>
           </button>
@@ -158,10 +155,10 @@ export default function AuthPage() {
           {/* 구분선 */}
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+              <div className="w-full border-t border-gray-300 "></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+              <span className="px-2 bg-white  text-gray-500 ">
                 또는
               </span>
             </div>
@@ -171,7 +168,7 @@ export default function AuthPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* 이메일 */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700  mb-2">
                 이메일
               </label>
               <div className="relative">
@@ -182,7 +179,7 @@ export default function AuthPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent  "
                   placeholder="이메일을 입력하세요"
                   required
                 />
@@ -192,7 +189,7 @@ export default function AuthPage() {
             {/* 이름 (회원가입일 때만) */}
             {isSignUp && (
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700  mb-2">
                   이름
                 </label>
                 <div className="relative">
@@ -203,7 +200,7 @@ export default function AuthPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent  "
                     placeholder="이름을 입력하세요"
                     required={isSignUp}
                   />
@@ -214,7 +211,7 @@ export default function AuthPage() {
             {/* 닉네임 (회원가입일 때만) */}
             {isSignUp && (
               <div>
-                <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="nickname" className="block text-sm font-medium text-gray-700  mb-2">
                   닉네임
                 </label>
                 <div className="relative">
@@ -225,7 +222,7 @@ export default function AuthPage() {
                     name="nickname"
                     value={formData.nickname}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent  "
                     placeholder="닉네임을 입력하세요"
                     required={isSignUp}
                   />
@@ -235,7 +232,7 @@ export default function AuthPage() {
 
             {/* 비밀번호 */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700  mb-2">
                 비밀번호
               </label>
               <div className="relative">
@@ -246,7 +243,7 @@ export default function AuthPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent  "
                   placeholder="비밀번호를 입력하세요"
                   required
                 />
@@ -262,7 +259,7 @@ export default function AuthPage() {
 
             {/* 에러 메시지 */}
             {error && (
-              <div className="text-red-500 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+              <div className="text-red-500 text-sm bg-red-50 /20 p-3 rounded-lg">
                 {error}
               </div>
             )}
