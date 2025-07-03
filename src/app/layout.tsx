@@ -26,6 +26,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                function getTheme() {
+                  const saved = localStorage.getItem('theme');
+                  if (saved && (saved === 'light' || saved === 'dark')) {
+                    return saved;
+                  }
+                  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                
+                const theme = getTheme();
+                document.documentElement.classList.remove('light', 'dark');
+                document.documentElement.classList.add(theme);
+                
+                console.log('초기 테마 적용:', theme);
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

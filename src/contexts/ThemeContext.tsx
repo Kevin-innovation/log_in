@@ -15,39 +15,49 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
   const [mounted, setMounted] = useState(false)
 
+  // 초기 테마 설정
   useEffect(() => {
     setMounted(true)
     
-    // 로컬 스토리지에서 테마 설정 불러오기
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-      setTheme(savedTheme)
-    } else {
-      // 시스템 테마 설정 확인
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      setTheme(systemTheme)
+    try {
+      // 로컬 스토리지에서 테마 설정 불러오기
+      const savedTheme = localStorage.getItem('theme') as Theme
+      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+        console.log('저장된 테마 불러오기:', savedTheme)
+        setTheme(savedTheme)
+      } else {
+        // 시스템 테마 설정 확인
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        console.log('시스템 테마 감지:', systemTheme)
+        setTheme(systemTheme)
+      }
+    } catch (error) {
+      console.error('테마 초기화 오류:', error)
     }
   }, [])
 
+  // 테마 적용
   useEffect(() => {
     if (!mounted) return
     
-    // HTML 요소에 테마 클래스 적용
-    const root = document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
+    try {
+      // HTML 요소에 테마 클래스 적용
+      const root = document.documentElement
+      root.classList.remove('light', 'dark')
+      root.classList.add(theme)
+      
+      // 로컬 스토리지에 테마 저장
+      localStorage.setItem('theme', theme)
+      console.log('테마 적용 완료:', theme, 'HTML 클래스:', root.className)
+    } catch (error) {
+      console.error('테마 적용 오류:', error)
     }
-    
-    // 로컬 스토리지에 테마 저장
-    localStorage.setItem('theme', theme)
-    console.log('테마 변경됨:', theme)
   }, [theme, mounted])
 
   const toggleTheme = () => {
-    console.log('테마 토글:', theme, '->', theme === 'light' ? 'dark' : 'light')
-    setTheme(prev => prev === 'light' ? 'dark' : 'light')
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    console.log('테마 토글 시작:', theme, '->', newTheme)
+    setTheme(newTheme)
   }
 
   const value: ThemeContextType = {
