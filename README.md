@@ -7,11 +7,11 @@ Supabase와 Google OAuth를 사용한 현대적인 인증 시스템을 구현한
 ## 🌟 주요 기능
 
 - ✅ **Google OAuth 로그인** - 원클릭 소셜 로그인
-- ✅ **이메일/비밀번호 회원가입** - 전통적인 회원가입 방식
+- ❌ **이메일/비밀번호 회원가입** - 현재 400 에러 (수정 필요)
 - ✅ **사용자 프로필 관리** - 이름, 닉네임 설정
-- ✅ **다크/라이트 모드** - 테마 토글 지원
+- ✅ **Kevin 브랜딩** - Kevin 이미지를 활용한 아이콘 시스템
 - ✅ **반응형 디자인** - 모바일 친화적 UI
-- ✅ **Kevin Landing Page** - 게임 선택 대시보드
+- ✅ **Kevin Landing Page** - Wave 게임 등 4개 게임 대시보드
 
 ## 🚀 라이브 데모
 
@@ -20,7 +20,8 @@ Supabase와 Google OAuth를 사용한 현대적인 인증 시스템을 구현한
 ## 🛠 기술 스택
 
 - **Frontend**: Next.js 15, React 18, TypeScript
-- **Styling**: Tailwind CSS, Lucide React Icons
+- **Styling**: Tailwind CSS (라이트 모드 전용)
+- **Icons**: Kevin 이미지 + Lucide React Icons
 - **Authentication**: Supabase Auth
 - **Database**: Supabase (PostgreSQL)
 - **Deployment**: Vercel
@@ -166,20 +167,24 @@ src/
 │   ├── auth/
 │   │   ├── callback/page.tsx    # OAuth 콜백 처리
 │   │   └── page.tsx             # 로그인/회원가입 페이지
-│   ├── dashboard/page.tsx       # Kevin Landing Page
+│   ├── dashboard/page.tsx       # Kevin Landing Page (Wave 게임 등)
 │   ├── layout.tsx               # 루트 레이아웃
 │   ├── page.tsx                 # 홈페이지
-│   └── globals.css              # 글로벌 스타일
-├── components/
-│   └── ThemeToggle.tsx          # 테마 토글 컴포넌트
+│   └── globals.css              # 글로벌 스타일 (라이트 모드만)
 ├── contexts/
-│   ├── AuthContext.tsx          # 인증 컨텍스트
-│   └── ThemeContext.tsx         # 테마 컨텍스트
-└── lib/
-    └── supabase.ts              # Supabase 클라이언트 설정
+│   └── AuthContext.tsx          # 인증 컨텍스트
+├── lib/
+│   └── supabase.ts              # Supabase 클라이언트 설정
+└── public/
+    └── kevin.png                # Kevin 이미지 (모든 아이콘용)
 ```
 
-## 🐛 트러블슈팅
+## 🐛 알려진 이슈 및 트러블슈팅
+
+### ❌ 일반 회원가입 400 에러 (현재 미해결)
+**증상**: 이메일/비밀번호로 회원가입 시 400 에러 발생
+**상태**: Google 로그인은 정상 동작
+**임시 해결책**: Google 로그인 사용 권장
 
 ### ❌ "The message port closed before a response was received"
 **원인**: Google OAuth redirect URI 설정 오류
@@ -211,10 +216,11 @@ src/
 - ✅ Next.js 15 프로젝트 초기 설정
 - ✅ Supabase 인증 시스템 구현
 - ✅ Google OAuth 로그인 연동
-- ✅ 다크/라이트 모드 구현
-- ✅ 반응형 UI 디자인
+- ✅ Kevin 이미지 브랜딩 적용
+- ✅ 반응형 UI 디자인 (라이트 모드)
 - ✅ Vercel 배포 완료
 - ✅ OAuth 설정 이슈 해결
+- ❌ 일반 회원가입 400 에러 (미해결)
 
 ## 📄 라이선스
 
@@ -227,4 +233,5 @@ MIT License
 ---
 
 **🎉 성공적으로 배포된 프로젝트입니다!**
-구글 로그인과 일반 회원가입이 모두 정상 작동합니다.
+구글 로그인은 정상 작동하며, Kevin 이미지 브랜딩이 적용되었습니다.
+일반 회원가입은 현재 400 에러로 수정이 필요합니다.

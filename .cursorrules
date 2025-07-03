@@ -11,8 +11,8 @@
 ### Frontend
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
+- **Styling**: Tailwind CSS (라이트 모드 전용)
+- **Icons**: Kevin 이미지 + Lucide React
 - **State Management**: React Context API
 
 ### Backend & Auth
@@ -124,6 +124,11 @@ Redirect URLs:
 **상황**: 3000 포트가 Obsidian MCP에서 사용됨
 **해결**: 다른 포트 사용 또는 Vercel 도메인으로 테스트
 
+### ❌ 일반 회원가입 400 에러
+**증상**: 이메일/비밀번호 회원가입 시 400 에러
+**원인**: Supabase profiles 테이블 정책 또는 데이터 유효성 문제
+**상태**: 현재 미해결 - Google 로그인은 정상 동작
+
 ## 📁 프로젝트 구조
 
 ```
@@ -133,22 +138,21 @@ src/
 │   │   ├── callback/page.tsx    # OAuth 콜백 처리 (중요!)
 │   │   └── page.tsx             # 로그인/회원가입 통합 페이지
 │   ├── dashboard/page.tsx       # Kevin Landing Page (4개 게임 카드)
-│   ├── layout.tsx               # 루트 레이아웃 (Providers 포함)
+│   ├── layout.tsx               # 루트 레이아웃 (AuthProvider 포함)
 │   ├── page.tsx                 # 홈페이지 (로그인 상태 체크)
-│   └── globals.css              # Tailwind 설정
-├── components/
-│   └── ThemeToggle.tsx          # 다크/라이트 모드 토글
+│   └── globals.css              # Tailwind 설정 (라이트 모드만)
 ├── contexts/
-│   ├── AuthContext.tsx          # 인증 상태 관리 (핵심!)
-│   └── ThemeContext.tsx         # 테마 상태 관리
-└── lib/
-    └── supabase.ts              # Supabase 클라이언트 설정
+│   └── AuthContext.tsx          # 인증 상태 관리 (핵심!)
+├── lib/
+│   └── supabase.ts              # Supabase 클라이언트 설정
+└── public/
+    └── kevin.png                # Kevin 이미지 (모든 아이콘용)
 ```
 
 ## 🎨 UI/UX 특징
-- **디자인**: 모던하고 깔끔한 그라디언트 배경
+- **디자인**: 모던하고 깔끔한 그라디언트 배경 (라이트 모드)
 - **반응형**: 모바일 친화적 디자인
-- **테마**: 다크/라이트 모드 지원
+- **브랜딩**: Kevin 이미지를 활용한 일관된 아이콘 시스템
 - **애니메이션**: 부드러운 트랜지션 효과
 - **접근성**: 적절한 색상 대비 및 포커스 상태
 
@@ -169,8 +173,8 @@ src/
 
 ## 🧪 테스트 시나리오
 1. ✅ Google 로그인 → 프로필 생성 → 대시보드 접속
-2. ✅ 일반 회원가입 → 로그인 → 대시보드 접속
-3. ✅ 다크/라이트 모드 토글 동작
+2. ❌ 일반 회원가입 → 400 에러 (미해결)
+3. ✅ Kevin 이미지 아이콘 표시 확인
 4. ✅ 로그아웃 → 홈페이지 리디렉션
 5. ✅ 미인증 상태에서 대시보드 접근 시도 → 로그인 페이지로 리디렉션
 
@@ -197,18 +201,20 @@ src/
 - OAuth 설정에서 wildcard 사용하지 말 것
 - 포트 충돌 시 강제로 kill하지 말 것
 - Supabase RLS 없이 운영하지 말 것
+- 다크모드 기능을 다시 추가하지 말 것 (제거됨)
 
 ## 🏆 성공 지표
 - ✅ Google 로그인 100% 동작
-- ✅ 일반 회원가입/로그인 100% 동작
+- ❌ 일반 회원가입 400 에러 (미해결)
 - ✅ 반응형 디자인 구현
-- ✅ 다크/라이트 모드 구현
-- ✅ 안전한 인증 시스템 구축
+- ✅ Kevin 이미지 브랜딩 적용
+- ✅ 안전한 OAuth 인증 시스템 구축
 - ✅ Vercel 배포 성공
 - ✅ 모든 OAuth 이슈 해결
 
 ## 🔮 향후 개발 방향
-- 게임 기능 실제 구현
+- 일반 회원가입 400 에러 해결 (최우선)
+- 게임 기능 실제 구현 (Wave 게임 등)
 - 사용자 프로필 상세 설정
 - 소셜 기능 추가
 - 성능 최적화
