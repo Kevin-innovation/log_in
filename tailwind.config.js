@@ -7,12 +7,7 @@ module.exports = {
   ],
   darkMode: 'class', // 클래스 기반 다크모드 설정
   theme: {
-    extend: {
-      colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-      },
-    },
+    extend: {},
   },
   plugins: [],
 } 
